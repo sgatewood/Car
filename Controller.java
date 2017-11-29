@@ -1,8 +1,11 @@
+// Change CAR_SPEED on line 43
+
 import java.util.ArrayList;
 
 class Controller{ // Bloop bloop don't worry about this stuff
   public static boolean STOP = false;
   public static int INDEX = 0;
+  public static int SPEED = 50; // Change to set car speed relative to mind wave data
 
   public static void main(String[] args) {
     Thread t = new Thread(new Clock());
@@ -13,12 +16,12 @@ class Controller{ // Bloop bloop don't worry about this stuff
    static class Clock implements Runnable{
 
      // Loop speed:
-     public static int speed = 100; // 1000 = loop once per second, 2000 = twice per second, etc.
+     public static int speed = 100; // 1000 = loop once per second, 2000 = twice per second, etc
      // (so 100 is 10 times a second)
 
      ArrayList<Integer> concentration_values = Reader.getConcentrationVals();
-     boolean reboot_file = true;
      int counter = 0;
+     boolean reboot_file = true;
      // If this is true, the file will refresh every 5 seconds.
      // If this is false, the file will only load at the beginning.
 
@@ -39,7 +42,7 @@ class Controller{ // Bloop bloop don't worry about this stuff
             }
 
             try{
-              int x = concentration_values.get(Controller.INDEX);
+              int x = concentration_values.get(Controller.INDEX) * Controller.SPEED/100;
               car.setSpeedText(x);
               car.right(x);
             }catch(IndexOutOfBoundsException e){
